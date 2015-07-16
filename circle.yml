@@ -6,6 +6,7 @@ test:
   override:
     - sbt clean coverage test
   post:
+    - sbt coveralls
     - cp -r target/scala-2.11/scoverage-report/* $CIRCLE_ARTIFACTS
 
 deployment:

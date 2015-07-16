@@ -62,6 +62,8 @@ libraryDependencies ++= Seq (
 
 mainClass in assembly := Some("com.mlh.spraysample.Boot")
 
+enablePlugins(DockerPlugin)
+
 docker <<= (docker dependsOn assembly)
 
 dockerfile in docker := {

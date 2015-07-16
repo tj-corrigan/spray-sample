@@ -6,8 +6,7 @@ test:
   override:
     - sbt clean coverage test
   post:
-    - pwd
-    - cp /home/ubuntu/spray-sample/target/scala-2.11/scoverage-report/* ENV['CIRCLE_ARTIFACTS']
+    - cp target/scala-2.11/scoverage-report/* $CIRCLE_ARTIFACTS
 
 deployment:
   hub:

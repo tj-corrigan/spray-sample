@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+
+test:
+  override:
+    - sbt clean test
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - sbt docker

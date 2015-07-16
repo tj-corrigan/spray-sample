@@ -59,3 +59,24 @@ libraryDependencies ++= Seq (
   ,"org.json4s" %% "json4s-native" % "3.2.11"
   ,"com.typesafe.play" %% "play-json" % "2.4.0-M1"
 )
+
+mainClass in assembly := Some("com.mlh.spraysample.Boot")
+
+docker <<= (docker dependsOn assembly)
+
+dockerfile in docker := {
+  val artifact = (assemblyOutputPath in assembly).value
+  val artifactTargetPath = s"/app/${artifact.name}"
+  new Dockerfile {
+    //frolvlad/alpine-oraclejdk8  for JDK (debugging)
+    //develar/java for JRE
+    from("develar/java")
+    add(artifact, artifactTargetPath)
+    entryPoint("java", "-jar", artifactTargetPath)
+    expose(80)
+  }
+}
+
+imageNames in docker := Seq(
+  ImageName("tjcorr/spray-sample:latest")
+)

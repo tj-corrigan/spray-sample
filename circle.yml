@@ -3,6 +3,9 @@ machine:
     - docker
 
 test:
+  pre:
+    - echo $nexus_file > ~/.ivy2/.credentials
+    - cat ~/.ivy2/.credentials
   override:
     - sbt coverage test
   post:

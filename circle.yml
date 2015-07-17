@@ -2,10 +2,12 @@ machine:
   services:
     - docker
 
-test:
+dependencies:
   pre:
-    - echo $nexus_file > ~/.ivy2/.credentials
+    - echo "$nexus_file" > ~/.ivy2/.credentials
     - cat ~/.ivy2/.credentials
+
+test:
   override:
     - sbt coverage test
   post:
@@ -16,4 +18,5 @@ deployment:
   hub:
     branch: master
     commands:
+      - docker login
       - sbt docker
